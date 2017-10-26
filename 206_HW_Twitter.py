@@ -85,8 +85,6 @@ def getTwitterData(searchTerm):
 		searchResults = api.search(searchTerm)["statuses"][0:5]
 		cachedTweets[searchTerm] = searchResults
 		return cachedTweets[searchTerm]
-
-
 ## 3. Using a loop, invoke your function, save the return value in a variable, and explore the 
 ##		data you got back!
 for n in range(0,3):
@@ -95,13 +93,7 @@ for n in range(0,3):
 	for tweet in relevantTweets:
 		print("TEXT: ", tweet["text"])
 		print("CREATED AT: ", tweet['created_at'])
-## 4. With what you learn from the data -- e.g. how exactly to find the 
-##		text of each tweet in the big nested structure -- write code to print out 
-## 		content from 5 tweets, as shown in the linked example.
 
 outFile = open('cachedTweets.json','w')
 outFile.write(json.dumps(cachedTweets, indent=2))
 outFile.close()
-
-
-
