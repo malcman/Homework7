@@ -73,27 +73,28 @@ try:
 	cacheFile.close()
 except:
 	cachedTweets = {}
-	
-print(json.dumps(cachedTweets, indent=2))
 ## 2. Write a function to get twitter data that works with the caching pattern, 
 ## 		so it either gets new data or caches data, depending upon what the input 
 ##		to search for is. 
 def getTwitterData(searchTerm):
-	for n in cachedTweets:
-		print(n)
 	if searchTerm in cachedTweets:
-		print("Retrieved")
+		print("using cache")
 		return cachedTweets[searchTerm]
 	else:
-		print("Requested")
-		cachedTweets[searchTerm] = api.search(searchTerm)
+		print("fetching")
+		searchResults = api.search(searchTerm)["statuses"][0:5]
+		cachedTweets[searchTerm] = searchResults
+		return cachedTweets[searchTerm]
 
 
 ## 3. Using a loop, invoke your function, save the return value in a variable, and explore the 
 ##		data you got back!
-term = input("enter a search term: ")
-getTwitterData(term)
-
+for n in range(0,3):
+	searchTerm = input('Enter Tweet term: ')
+	relevantTweets = getTwitterData(searchTerm)
+	for tweet in relevantTweets:
+		print("TEXT: ", tweet["text"])
+		print("CREATED AT: ", tweet['created_at'])
 ## 4. With what you learn from the data -- e.g. how exactly to find the 
 ##		text of each tweet in the big nested structure -- write code to print out 
 ## 		content from 5 tweets, as shown in the linked example.
